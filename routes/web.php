@@ -5,3 +5,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('index');
 });
+
+Route::get('/Login-Medico', function () {
+    return view('loginMedico');
+});
