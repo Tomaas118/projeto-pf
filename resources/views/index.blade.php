@@ -49,7 +49,7 @@
         <!-- Imagens Médicos e Pacientes -->
         <div class="row justify-content-center dis-top">
             <div class="col-md-4 img-container" onclick="redirectToPage('/Login-Medico')">
-                <img src="Imagens/medico.png" class="img-resp" alt="Medico">
+                <img src="{{ asset('Imagens/medico.png') }}" class="img-resp" alt="Medico">
                 <h4 class="mt-1">Medico</h4>
             </div>
             <div class="col-md-4 img-container" onclick="redirectToPage('/Login-Paciente')">
