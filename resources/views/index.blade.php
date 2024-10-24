@@ -42,18 +42,16 @@
 <body class="text-center">
 
     <div class="container">
-        <!-- Imagem SNS24 -->
         <img class="img-top img-fluid" src="Imagens/SNS24.png" alt="SNS 24"><br>
         <h3 class="mt-3">Qual é o tipo de conta que vai utilizar?</h3>
 
-        <!-- Imagens Médicos e Pacientes -->
         <div class="row justify-content-center dis-top">
             <div class="col-md-4 img-container" onclick="redirectToPage('/Login-Medico')">
                 <img src="{{ asset('Imagens/medico.png') }}" class="img-resp" alt="Medico">
                 <h4 class="mt-1">Medico</h4>
             </div>
             <div class="col-md-4 img-container" onclick="redirectToPage('/Login-Paciente')">
-                <img src="Imagens/paciente.png" class="img-resp" alt="Paciente">
+                <img src="{{ asset('Imagens/paciente.png') }}" class="img-resp" alt="Paciente">
                 <h4 class="mt-1">Paciente</h4>
             </div>
         </div>
