@@ -17,10 +17,3 @@ require __DIR__.'/../vendor/autoload.php';
 (require_once __DIR__.'/../bootstrap/app.php')
     ->handleRequest(Request::capture());
 
-$kernel = $app->make(Kernel::class);
-
-$response = $kernel->handle(
-    $request = Request::capture()
-)->send();
-
-$kernel->terminate($request, $response);
