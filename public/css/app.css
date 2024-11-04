@@ -1,0 +1,44 @@
+body {
+    background-color: #FAFAFA; /* Cor de fundo desejada */
+}
+.img-top {
+  margin-top: 5%; /* Espaço acima da imagem principal */
+  max-width: 100%; /* Tornar a imagem responsiva */
+  height: auto; /* Manter a proporção */
+  max-height: 130px;
+}
+.dis-top {
+    margin-top: 6%;
+}
+.img-resp {
+    width: 100%; /* Faz a imagem ocupar todo o espaço do contêiner */
+    max-width: 512px; /* Limite máximo da largura */
+    height: auto; /* Mantém a proporção */
+    max-height: 200px;
+    object-fit: contain; /* Evita distorções, ajusta a imagem dentro do espaço */
+    cursor: pointer; /* Muda o cursor ao passar o mouse */
+}
+.img-container {
+    text-align: center; /* Centraliza a imagem e o texto */
+}
+
+.icon-pequeno {
+    font-size: 20px; 
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: #333;
+    background-color: #f0f0f0; 
+    border-radius: 50%; 
+    padding: 8px; 
+    border: 2px solid #333;
+    cursor: pointer;
+}
+
+.form-container {
+    background-color: #fff;
+    padding: 20px; 
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
