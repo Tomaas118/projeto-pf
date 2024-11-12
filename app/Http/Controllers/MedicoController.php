@@ -10,7 +10,7 @@ class MedicoController extends Controller
         
     }
 
-    public function registar(Request $request){
+    public function registarUser(Request $request){
         
     }
 }

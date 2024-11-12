@@ -7,14 +7,14 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void {
         
-        Schema::create('paciente', function (Blueprint $table) {
-            $table->id('Id_Paciente');
-            $table->foreignId('Id_User')->constrained('utilizadores', 'ID');
-            $table->string('Nome', 255);
-            $table->string('Morada', 255);
-            $table->string('N_Cidadao', 255);
-            $table->date('DataNascimento');
-            $table->string('N_NacionalSaude', 255);
+        Schema::create('pacientes', function (Blueprint $table) {
+            $table->id('id');
+            $table->foreignId('id_user')->constrained('users', 'id');
+            $table->string('nome', 255);
+            $table->string('morada', 255);
+            $table->string('n_cidadao', 255);
+            $table->date('data_nascimento');
+            $table->string('n_nacionalSaude', 255);
         });
     }
 
