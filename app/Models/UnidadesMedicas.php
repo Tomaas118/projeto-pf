@@ -5,28 +5,25 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Paciente extends Model
+class UnidadesMedicas extends Model
 {
     use HasFactory;
-
-    protected $table = 'pacientes';
+    protected $table = 'unidades_medicas';
 
     protected $primaryKey = 'id';
     public $incrementing = true;
     protected $keyType = 'int';
     public $timestamps = false;
-
+    
     protected $fillable = [
-        'id_user',
-        'nome',
-        'morada',
-        'n_cidadao',
-        'data_nascimento',
-        'n_nacionalSaude',
+        'nome', 
+        'morada', 
+        'setor',
     ];
 
-    public function utilizador()
+    public function medicos()
     {
-        return $this->belongsTo(User::class, 'id_user', 'id');
+        return $this->belongsToMany(Medico::class, 'medicos_unidades_medicas', 'id_unidadeMedica', 'id_medico')
+                    ->withPivot('ativo');
     }
 }
