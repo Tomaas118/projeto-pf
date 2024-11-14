@@ -14,7 +14,7 @@
             <input type="password" class="form-control" id="password" name="password" required>
         </div>
         
-        <p class="mb-3">Ainda não tem conta? <a href="/Registar-Medico" class="text-primary">Registar</a></p>
+        <p class="mb-3">Ainda não tem conta? <a href="/Registar-Medico-User" class="text-primary">Registar</a></p>
 
         <button type="submit" class="btn btn-primary">Login</button>
     </form>

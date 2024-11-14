@@ -8,14 +8,14 @@ return new class extends Migration {
     public function up(): void {
 
         Schema::create('baixas_medicas', function (Blueprint $table) {
-            $table->id('Id_Baixa');
-            $table->foreignId('Id_Medico')->constrained('medico', 'Id_Medico');
-            $table->foreignId('Id_Paciente')->constrained('paciente', 'Id_Paciente');
-            $table->foreignId('Id_UnidadeMedica')->constrained('unidade_medica', 'Id_UnidadeMedica');
-            $table->string('Diagnostico', 255);
-            $table->date('DataInicio');
-            $table->date('DataFim');
-            $table->text('Recomendacoes');
+            $table->id('id');
+            $table->foreignId('id_medico')->constrained('medicos', 'id');
+            $table->foreignId('id_paciente')->constrained('paciente', 'id');
+            $table->foreignId('id_unidadeMedica')->constrained('unidade_medica', 'id');
+            $table->string('diagnostico', 255);
+            $table->date('dataInicio');
+            $table->date('dataFim');
+            $table->text('recomendacoes');
         });
     }
 

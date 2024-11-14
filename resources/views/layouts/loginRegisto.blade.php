@@ -17,7 +17,7 @@
                 <img src="{{ asset('Imagens/SNS24.png') }}" class="img-fluid" alt="Imagem Central">
             </div>
 
-            <div class="col-md-6 d-flex justify-content-center align-items-center bg-light">
+            <div class="col-md-6 d-flex justify-content-center align-items-center bg-light my-5">
                 <div class="form-container w-75">
                     @yield('content')
                 </div>

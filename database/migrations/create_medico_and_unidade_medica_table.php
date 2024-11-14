@@ -7,32 +7,37 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void {
 
-        Schema::create('medico', function (Blueprint $table) {
-            $table->id('Id_Medico');
-            $table->foreignId('Id_User')->constrained('utilizadores', 'ID');
-            $table->string('Nome', 255);
-            $table->string('Telemovel', 255);
-            $table->string('Especialidade', 255);
+        Schema::create('medicos', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('id_user')->constrained('users', 'id');
+            $table->string('nome', 255);
+            $table->string('morada',255);
+            $table->string('telemovel', 255);
+            $table->string('n_cidadao', 255);
+            $table->string('especialidade', 255);
         });
 
-        Schema::create('unidade_medica', function (Blueprint $table) {
-            $table->id('Id_UnidadeMedica');
-            $table->string('Nome', 255);
-            $table->string('Morada', 255);
-            $table->string('Setor', 255);
+        Schema::create('unidades_medicas', function (Blueprint $table) {
+            $table->id();
+            $table->string('nome', 255);
+            $table->string('morada', 255);
+            $table->string('setor', 255);
         });
 
-        Schema::create('medico_unidade_medica', function (Blueprint $table) {
-            $table->id('Id');
-            $table->foreignId('Id_Medico')->constrained('medico', 'Id_Medico');
-            $table->foreignId('Id_UnidadeMedica')->constrained('unidade_medica', 'Id_UnidadeMedica');
-            $table->boolean('Ativo');
+        Schema::create('medicos_unidades_medicas', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('id_medico')->constrained('medicos', 'id');
+            $table->foreignId('id_unidadeMedica')->constrained('unidades_medicas', 'id');
+            $table->boolean('ativo');
         });
     }
 
     public function down(): void {
-        Schema::dropIfExists('medico');
-        Schema::dropIfExists('unidade_medica');
-        Schema::dropIfExists('medico_unidade_medica');
+        Schema::dropIfExists('medicos');
+        Schema::dropIfExists('unidades_medicas');
+        Schema::dropIfExists('medicos_unidades_medicas');
+        // Schema::dropIfExists('medico');
+        // Schema::dropIfExists('unidade_medica');
+        // Schema::dropIfExists('medico_unidade_medica');
     }
 };
