@@ -69,10 +69,8 @@
   function areAllFieldsEmpty(groupIndex) {
     const nomeField = document.getElementById(`unidade_nome_${groupIndex}`);
     const moradaField = document.getElementById(`unidade_morada_${groupIndex}`);
-    const setorField = document.getElementById(`unidade_setor_${groupIndex}`);
-    const checkboxField = document.getElementById(`unidade_ativo_${groupIndex}`);
 
-    return !nomeField.value && !moradaField.value && !setorField.value && !checkboxField.checked;
+    return !nomeField.value && !moradaField.value;
   }
 
   function removeNextGroup(groupIndex) {
