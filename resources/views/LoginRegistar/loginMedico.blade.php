@@ -3,6 +3,11 @@
 @section('title', 'Login Médico')
 
 @section('content')
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
     <form action="{{ route('loginMedico') }}" method="POST">
         @csrf
         <div class="mb-3">
