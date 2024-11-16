@@ -81,7 +81,7 @@ class MedicoController extends Controller
         $this->registarTotal();
 
 
-        return redirect()->route('finalizarRegistro');
+        return redirect()->route('loginMedico')->with('success', 'Médico registado com sucesso!');
     }
 
     public function registarTotal(){

@@ -79,6 +79,6 @@ class PacienteController extends Controller
 
         session()->forget('user_data');
 
-        return redirect()->route('paginaSucesso')->with('message', 'Usuário e paciente registados com sucesso!');
+        return redirect()->route('loginPaciente')->with('success', 'Utilizador registado com sucesso!');
     }
 }
