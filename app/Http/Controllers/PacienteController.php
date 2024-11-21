@@ -5,12 +5,60 @@ namespace App\Http\Controllers;
 use App\Models\Paciente;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class PacienteController extends Controller
 {
     public function login(Request $request){
-        
+        $credentials = $request->validate([
+            'user_or_email' => 'required',
+            'password' => 'required|min:8',
+        ], [
+            'user_or_email.required' => 'O campo de usuário ou email é obrigatório.',
+            'password.required' => 'A password é obrigatória.',
+            'password.min' => 'A password deve ter no mínimo 8 caracteres.',
+        ]);
+
+        $loginField = $credentials['user_or_email'];
+
+        if (str_contains($loginField, '@')) {
+            $authCredentials = [
+                'email' => $loginField,
+                'password' => $credentials['password']
+            ];
+        } else {
+            $authCredentials = [
+                'name' => $loginField,
+                'password' => $credentials['password']
+            ];
+        }
+
+        if (Auth::attempt($authCredentials)) {
+            $request->session()->regenerate();
+            
+            $user = Auth::user();
+            $isPaciente = DB::table('pacientes')->where('id_user', $user->id)->exists();
+            
+            if ($isPaciente) {
+                return redirect()->intended('paciente.dashboard'); 
+            } else {
+                $isMedico = DB::table('medicos')->where('id_user', $user->id)->exists();
+                
+                if ($isMedico) {
+                    return redirect()->intended('medico.dashboard');
+                }
+            }
+
+            Auth::logout();
+            return back()->withErrors([
+                'user_or_email' => 'Você não tem permissão para acessar o sistema.',
+            ]);
+        }
+
+        return back()->withErrors([
+            'user_or_email' => 'As credenciais estão incorretas.',
+        ]);
     }
 
     public function storeUser(Request $request)

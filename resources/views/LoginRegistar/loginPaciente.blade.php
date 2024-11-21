@@ -3,6 +3,15 @@
 @section('title', 'Login Paciente')
 
 @section('content')
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     @if(session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
@@ -11,8 +20,8 @@
     <form action="{{ route('loginPaciente') }}" method="POST">
         @csrf
         <div class="mb-3">
-            <label for="user/Numero" class="form-label">Nome de usuário/Nº Cartão de cidadão</label>
-            <input type="text" class="form-control" id="user/Numero" name="user/Numero" required>
+            <label for="user_or_email" class="form-label">Nome de usuário/Email</label>
+            <input type="text" class="form-control" id="user_or_email" name="user_or_email" required>
         </div>
         <div class="mb-3">
             <label for="password" class="form-label">Password</label>
