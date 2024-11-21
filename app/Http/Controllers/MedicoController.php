@@ -7,6 +7,7 @@ use App\Models\Medico;
 use App\Models\UnidadesMedicas;
 use App\Models\MedicoUnidadeMedica;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class MedicoController extends Controller
 {
@@ -37,7 +38,24 @@ class MedicoController extends Controller
 
         if (Auth::attempt($authCredentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('dashboard');
+
+            $user = Auth::user();
+            $isMedico = DB::table('medicos')->where('user_id', $user->id)->exists();
+
+            if ($isMedico) {
+                return redirect()->intended('medico.dashboard');
+            } else {
+                $isPaciente = DB::table('pacientes')->where('user_id', $user->id)->exists();
+
+                if ($isPaciente) {
+                    return redirect()->intended('paciente.dashboard'); 
+                }
+            }
+
+            Auth::logout();
+            return back()->withErrors([
+                'user_or_email' => 'Você não tem permissão para acessar o sistema.',
+            ]);
         }
 
         return back()->withErrors([
