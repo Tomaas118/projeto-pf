@@ -25,11 +25,11 @@
   </div>
   <div class="mb-3">
     <label for="n_cidadao" class="form-label">Nº Cartão de Cidadão</label>
-    <input type="text" class="form-control" id="n_cidadao" name="n_cidadao" required minlength="8" maxlength="8" placeholder="Coloque os primeiros 8 numeros do cartao de cidadão">
+    <input type="number" class="form-control" id="n_cidadao" name="n_cidadao" required minlength="8" maxlength="8" placeholder="Coloque os primeiros 8 numeros do cartao de cidadão">
   </div>
   <div class="mb-3">
     <label for="n_nacionalSaude" class="form-label">Nº Utente de saude</label>
-    <input type="text" class="form-control" id="n_nacionalSaude" name="n_nacionalSaude" required minlength="9" maxlength="9" placeholder="Coloque os 9 numeros do Utente de saude">
+    <input type="number" class="form-control" id="n_nacionalSaude" name="n_nacionalSaude" required minlength="9" maxlength="9" placeholder="Coloque os 9 numeros do Utente de saude">
   </div>
   <div class="mb-3">
     <label for="data_nascimento" class="form-label">Data de nascimento</label>
