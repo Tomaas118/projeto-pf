@@ -40,12 +40,12 @@ class MedicoController extends Controller
             $request->session()->regenerate();
 
             $user = Auth::user();
-            $isMedico = DB::table('medicos')->where('user_id', $user->id)->exists();
+            $isMedico = DB::table('medicos')->where('id_user', $user->id)->exists();
 
             if ($isMedico) {
                 return redirect()->intended('medico.dashboard');
             } else {
-                $isPaciente = DB::table('pacientes')->where('user_id', $user->id)->exists();
+                $isPaciente = DB::table('pacientes')->where('id_user', $user->id)->exists();
 
                 if ($isPaciente) {
                     return redirect()->intended('paciente.dashboard'); 
