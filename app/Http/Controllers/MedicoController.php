@@ -6,20 +6,77 @@ use App\Models\User;
 use App\Models\Medico;
 use App\Models\UnidadesMedicas;
 use App\Models\MedicoUnidadeMedica;
-    
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class MedicoController extends Controller
 {
-    public function login(Request $request){
-        
+    public function login(Request $request)
+    {
+        $credentials = $request->validate([
+            'user_or_email' => 'required',
+            'password' => 'required|min:8',
+        ], [
+            'user_or_email.required' => 'O campo de usuário ou email é obrigatório.',
+            'password.required' => 'A password é obrigatória.',
+            'password.min' => 'A password deve ter no mínimo 8 caracteres.',
+        ]);
+
+        $loginField = $credentials['user_or_email'];
+
+        if (str_contains($loginField, '@')) {
+            $authCredentials = [
+                'email' => $loginField,
+                'password' => $credentials['password']
+            ];
+        } else {
+            $authCredentials = [
+                'name' => $loginField,
+                'password' => $credentials['password']
+            ];
+        }
+
+        if (Auth::attempt($authCredentials)) {
+            $request->session()->regenerate();
+
+            $user = Auth::user();
+            $isMedico = DB::table('medicos')->where('id_user', $user->id)->exists();
+
+            if ($isMedico) {
+                return redirect()->intended('medico.dashboard');
+            } else {
+                $isPaciente = DB::table('pacientes')->where('id_user', $user->id)->exists();
+
+                if ($isPaciente) {
+                    return redirect()->intended('paciente.dashboard'); 
+                }
+            }
+
+            Auth::logout();
+            return back()->withErrors([
+                'user_or_email' => 'Você não tem permissão para acessar o sistema.',
+            ]);
+        }
+
+        return back()->withErrors([
+            'user_or_email' => 'As credenciais estão incorretas.',
+        ]);
     }
 
     public function storeUser(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|max:255',
             'email' => 'required|email|max:255',
             'password' => 'required|min:8',
+        ], [
+            'name.required' => 'O campo de nome de usuário é obrigatório.',
+            'name.max' => 'O campo só suporta 255 caracters.',
+            'email.required' => 'O email é obrigatória.',
+            'email.email' => 'Não colocou um email.',
+            'email.max' => 'O campo só suporta 255 caracters.',
+            'password.required' => 'A password é obrigatória.',
+            'password.min' => 'A password deve ter no mínimo 8 caracteres.',
         ]);
 
         session([
@@ -36,11 +93,21 @@ class MedicoController extends Controller
     public function storeMedico(Request $request)
     {
         $request->validate([
-            'nome' => 'required|string|max:255',
-            'morada' => 'required|string|max:255',
+            'nome' => 'required|max:255',
+            'morada' => 'required|max:255',
             'telemovel' => 'required|min:9|max:9',
             'n_cidadao' => 'required|min:8|max:8',
-            'especialidade' => 'required|string|max:255',
+            'especialidade' => 'required|max:255',
+        ], [
+            'nome.required' => 'O campo de nome é obrigatório.',
+            'nome.max' => 'O campo só suporta 255 caracters.',
+            'morada.required' => 'O campo morada é obrigatória.',
+            'morada.max' => 'O campo só suporta 255 caracters.',
+            'telemovel.required' => 'A password é obrigatória.',
+            'telemovel.min' => 'O campo deve ter exatamente 9 numeros.',
+            'telemovel.max' => 'O campo deve ter exatamente 9 numeros.',
+            'especialidade.required' => 'O campo especialidade é obrigatória.',
+            'especialidade.max' => 'O campo só suporta 255 caracters.',
         ]);
 
         session([

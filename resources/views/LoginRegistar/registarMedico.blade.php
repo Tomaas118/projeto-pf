@@ -25,11 +25,11 @@
     </div>
     <div class="mb-3">
       <label for="telemovel" class="form-label">Telemóvel</label>
-      <input type="text" class="form-control" id="telemovel" name="telemovel" required minlength="9" maxlength="9" placeholder="Coloque o seu numero de telemovel">
+      <input type="number" class="form-control" id="telemovel" name="telemovel" required minlength="9" maxlength="9" placeholder="Coloque o seu numero de telemovel">
     </div>
     <div class="mb-3">
       <label for="n_cidadao" class="form-label">Nº Cartão de Cidadão</label>
-      <input type="text" class="form-control" id="n_cidadao" name="n_cidadao" required minlength="8" maxlength="8" placeholder="Coloque os primeiros 8 numeros do cartao de cidadão">
+      <input type="number" class="form-control" id="n_cidadao" name="n_cidadao" required minlength="8" maxlength="8" placeholder="Coloque os primeiros 8 numeros do cartao de cidadão">
     </div>
     <div class="mb-3">
       <label for="especialidade" class="form-label">Especialidade</label>
