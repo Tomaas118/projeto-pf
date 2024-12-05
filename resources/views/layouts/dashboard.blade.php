@@ -6,38 +6,17 @@
     <title>@yield('title')</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link rel= "stylesheet" href= "https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css" >
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <style>
         .navbar {
             box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.1);
             z-index: 2;
+            padding-left: 20px;
         }
-        .sidenav {
-            height: 100%;
-            width: 250px;
-            position: fixed;
-            z-index: 1;
-            top: 56px;
-            left: 0;
-            background-color: #f8f9fa;
-            overflow-x: hidden;
-            padding-top: 20px;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-        }
-        .sidenav a {
-            padding: 8px 16px;
-            text-decoration: none;
-            font-size: 18px;
-            color: #000;
-            display: block;
-        }
-        .sidenav a:hover {
-            background-color: #c52128;
-            color: #fff;
+        .navbar-nav .nav-item {
+            margin-left: 20px;
         }
         .main-content {
-            margin-left: 260px;
             padding: 20px;
         }
     </style>
@@ -63,10 +42,6 @@
             </ul>
         </div>
     </nav>
-
-    <div class="sidenav">
-        @yield('sidenav-content')
-    </div>
 
     <div class="main-content">
         @yield('content')
