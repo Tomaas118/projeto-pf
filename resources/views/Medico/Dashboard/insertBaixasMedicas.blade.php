@@ -8,21 +8,38 @@
     <form>
         <div class="mb-3">
             <label class="form-label">Médico</label>
-            <input type="text" class="form-control" id="id_medico" name="id_medico" value="1" readonly>
+            <input type="text" class="form-control" id="id_medico" name="id_medico" value="Dr. John Doe" readonly>
         </div>
-        <div class="mb-3">
-            <label class="form-label">Paciente</label>
-            <select class="form-control" id="id_paciente" name="id_paciente" required>
-                <option value="1">Paciente 1</option>
-                <option value="2">Paciente 2</option>
-            </select>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Unidade Médica</label>
-            <select class="form-control" id="id_unidadeMedica" name="id_unidadeMedica" required>
-                <option value="1">Unidade Médica 1</option>
-                <option value="2">Unidade Médica 2</option>
-            </select>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Cartão de Cidadão</label>
+                <div class="input-group">
+                    <select class="form-control combobox" id="cartao_cidadao_select" name="cartao_cidadao_select">
+                        <option value="123456789">123456789</option>
+                        <option value="987654321">987654321</option>
+                        <option value="456789123">456789123</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Paciente</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="paciente_name" name="paciente_name" readonly>
+                    <input type="hidden" id="paciente_select" name="paciente_select">
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Unidade Médica</label>
+                <div class="input-group">
+                    <select class="form-control combobox" id="unidade_medica_select" name="unidade_medica_select">
+                        <option value="1">Hospital Santa Maria</option>
+                        <option value="2">Clinica Boa Saúde</option>
+                        <option value="3">Centro Médico São José</option>
+                        <option value="4">Hospital das Flores</option>
+                        <option value="5">Unidade de Saúde Familiar</option>
+                    </select>
+                </div>
+            </div>
         </div>
         <div class="mb-3">
             <label class="form-label">Diagnóstico</label>
@@ -43,4 +60,26 @@
         <button type="submit" class="btn btn-primary">Criar Baixa Médica</button>
     </form>
 </div>
+
+<script>
+    document.getElementById('cartao_cidadao_select').addEventListener('change', function() {
+        var selectedCartao = this.value;
+        var pacienteSelect = document.getElementById('paciente_select');
+        var pacienteName = document.getElementById('paciente_name');
+        
+        var pacienteOptions = {
+            "123456789": {id: 1, name: "João Silva"},
+            "987654321": {id: 2, name: "Maria Santos"},
+            "456789123": {id: 3, name: "José Pereira"}
+        };
+        
+        if (pacienteOptions[selectedCartao]) {
+            pacienteSelect.value = pacienteOptions[selectedCartao].id;
+            pacienteName.value = pacienteOptions[selectedCartao].name;
+        } else {
+            pacienteSelect.value = '';
+            pacienteName.value = '';
+        }
+    });
+</script>
 @endsection
