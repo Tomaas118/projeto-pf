@@ -8,6 +8,8 @@ use App\Models\UnidadesMedicas;
 use App\Models\MedicoUnidadeMedica;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Models\BaixaMedica;
+use App\Models\Paciente;
 
 class MedicoController extends Controller
 {
@@ -184,4 +186,42 @@ class MedicoController extends Controller
         session()->flush();
     }
 
+    public function getPaciente($cartao_cidadao)
+    {
+        $paciente = Paciente::where('n_cidadao', $cartao_cidadao)->first();
+        return response()->json(['paciente' => $paciente]);
+    }
+
+    public function insertBaixasMedicas(Request $request)
+    {
+        $request->validate([
+            'id_medico' => 'required',
+            'id_paciente' => 'required',
+            'id_unidadeMedica' => 'required',
+            'cartao_cidadao_input' => 'required',
+            'diagnostico' => 'required',
+            'dataInicio' => 'required|date|after_or_equal:today',
+            'dataFim' => 'required|date|after_or_equal:dataInicio',
+            'recomendacoes' => 'nullable'
+        ]);
+
+        BaixaMedica::create([
+            'id_medico' => Auth::id(),
+            'id_paciente' => $request->id_paciente,
+            'id_unidadeMedica' => $request->id_unidadeMedica,
+            'id_ncidadao' => $request->cartao_cidadao_input,
+            'diagnostico' => $request->diagnostico,
+            'dataInicio' => $request->dataInicio,
+            'dataFim' => $request->dataFim,
+            'recomendacoes' => $request->recomendacoes
+        ]);
+
+        return redirect()->route('insertBaixasMedicas')->with('success', 'Baixa médica criada com sucesso!');
+    }
+
+    public function showUnidadesMedicasForm()
+    {
+        $unidadesMedicas = UnidadesMedicas::all();
+        return view('Medico.Dashboard.InsertBaixasMedicas', compact('unidadesMedicas'));
+    }
 }
