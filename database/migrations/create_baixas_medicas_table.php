@@ -11,7 +11,8 @@ return new class extends Migration {
             $table->id('id');
             $table->foreignId('id_medico')->constrained('medicos', 'id');
             $table->foreignId('id_paciente')->constrained('pacientes', 'id');
-            $table->foreignId('id_unidadeMedica')->constrained('unidade_medica', 'id');
+            $table->foreignId('id_unidadeMedica')->constrained('unidades_medicas', 'id');
+            $table->foreignId('id_ncidadao')->constrained('pacientes', 'n_cidadao');
             $table->string('diagnostico', 255);
             $table->date('dataInicio');
             $table->date('dataFim');
