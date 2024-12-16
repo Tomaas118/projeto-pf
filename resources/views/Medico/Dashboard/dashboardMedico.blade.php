@@ -24,7 +24,7 @@
                             <div class="icon-wrapper"><i class="fa-solid fa-file-medical"></i></div>
                         </div>
                         <div class="card-title">
-                            <p>Ver Baixas Temporarias</p>
+                            <p>Ver Baixas Emitidas</p>
                         </div>
                     </a>
                 </div>
