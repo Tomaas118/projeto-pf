@@ -9,7 +9,7 @@
         <div class="section-content">
             <div class="row">
                 <div class="col-md-3">
-                    <a class="card text-center card-custom" href="{{ route('insertBaixasMedicas') }}">
+                    <a class="card text-center card-custom" href="Baixas-temporarias">
                         <div class="card-body">
                             <div class="icon-wrapper"><i class="fa-solid fa-file-prescription"></i></div>
                         </div>

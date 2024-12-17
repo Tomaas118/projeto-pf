@@ -72,7 +72,7 @@
 
     document.getElementById('cartao_cidadao_input').addEventListener('input', debounce(function() {
         var cartao = this.value;
-        fetch(`/api/paciente/${cartao}`)
+        fetch(`/Medico/api/paciente/${cartao}`)
             .then(response => response.json())
             .then(data => {
                 if (data.paciente) {

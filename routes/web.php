@@ -16,9 +16,9 @@ Route::get('/Registar-Paciente-User', function () { return view('LoginRegistar.r
 Route::get('/Registar-Paciente', function () { return view('LoginRegistar.registarPaciente'); });
 
 Route::prefix('Medico')->group(function () {
-    Route::get('/Dashboard', function () { return view('Medico.Dashboard.dashboardMedico'); });
+    Route::get('/Dashboard', function () { return view('Medico.Dashboard.dashboardMedico'); })->name('MedicoDashboard');
     
-    Route::get('/baixas-temporarias', [MedicoController::class, 'showUnidadesMedicasForm']);
+    Route::get('/Baixas-temporarias', [MedicoController::class, 'showUnidadesMedicasForm']);
     Route::get('/api/paciente/{cartao_cidadao}', [MedicoController::class, 'getPaciente']);
     
     Route::post('/dashboard', [MedicoController::class, 'dashboardMedico'])->name('dashboardMedico');
