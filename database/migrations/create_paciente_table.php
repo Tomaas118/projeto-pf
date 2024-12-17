@@ -12,7 +12,7 @@ return new class extends Migration {
             $table->foreignId('id_user')->constrained('users', 'id');
             $table->string('nome', 255);
             $table->string('morada', 255);
-            $table->string('n_cidadao', 255);
+            $table->string('n_cidadao', 255)->unique();
             $table->date('data_nascimento');
             $table->string('n_nacionalSaude', 255);
         });

@@ -41,9 +41,8 @@ Route::get('/dashboard', function () {
     return view('Medico.Dashboard.dashboardMedico');
 });
 
-Route::get('/baixas-temporarias', function () {
-    return view('Medico.Dashboard.insertBaixasMedicas');
-});
+Route::get('/baixas-temporarias', [MedicoController::class, 'showUnidadesMedicasForm']);
+Route::get('/api/paciente/{cartao_cidadao}', [MedicoController::class, 'getPaciente']);
 
 Route::post('/Login-Medico', [MedicoController::class, 'login'])->name('loginMedico');
 Route::post('/Registar-Medico-User', [MedicoController::class, 'storeUser'])->name('registarMedicoUser');
