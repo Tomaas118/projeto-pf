@@ -3,17 +3,17 @@
 @section('title', 'Inserir Baixa Médica')
 
 @section('content')
-    @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
 <div class="container">
 <div class="container mt-2">
     <div class="card shadow-lg">
         <div class="card-header bg-secondary text-white">
             <h1 class="mb-0">Inserir Baixa Médica</h1>
         </div>
+        @if(session('success'))
+            <div class="alert alert-success" id="success-message">
+                {{ session('success') }}
+            </div>
+        @endif
         <div class="card-body">
             <form action="{{ route('insertBaixasMedicas') }}" method="POST">
                 @csrf
@@ -40,7 +40,8 @@
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Data de Início</label>
-                        <input type="text" class="form-control-plaintext" id="dataInicio" name="dataInicio" required>
+                        <input type="hidden" class="form-control-plaintext" id="dataInicio" name="dataInicio" required>
+                        <input type="text" class="form-control-plaintext" id="dataInicioDisplay" readonly>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Data de Fim</label>
@@ -68,10 +69,12 @@
     let mes = String(hoje.getMonth() + 1).padStart(2, '0');
     let ano = hoje.getFullYear();
 
-    let dataFormatada = `${dia}/${mes}/${ano}`;
+    let dataFormatada = `${ano}-${mes}-${dia}`;
+    let dataDisplay = `${dia}/${mes}/${ano}`;
 
     document.getElementById("dataInicio").value = dataFormatada;
-    
+    document.getElementById("dataInicioDisplay").value = dataDisplay;
+
     function debounce(func, wait) {
         let timeout;
         return function(...args) {
@@ -84,7 +87,6 @@
         var cartao = this.value;
         var pacienteName = document.getElementById('paciente_name').value;
         var pacienteSelect = document.getElementById('paciente_select').value;
-
 
         if(cartao.length == 8){
             fetch(`/Medico/api/paciente/${cartao}`)
@@ -102,5 +104,12 @@
             }
         }
     }, 550));
+
+    setTimeout(function() {
+        var successMessage = document.getElementById('success-message');
+        if (successMessage) {
+            successMessage.style.display = 'none';
+        }
+    }, 5000);
 </script>
 @endsection
