@@ -71,7 +71,7 @@
         transition: background-color 0.3s ease;
     }
     .card:hover {
-        background-color: #0b5ed7; /* Tom de azul mais escuro no hover */
+        background-color: #0b5ed7 !important;
     }
 </style>
 
