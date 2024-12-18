@@ -22,7 +22,7 @@ Route::prefix('Medico')->group(function () {
     Route::get('/api/paciente/{cartao_cidadao}', [MedicoController::class, 'getPaciente']);
     
     Route::post('/dashboard', [MedicoController::class, 'dashboardMedico'])->name('dashboardMedico');
-    Route::post('/baixas-temporarias', [MedicoController::class, 'insertBaixasMedicas'])->name('insertBaixasMedicas');
+    Route::post('/Baixas-temporarias', [MedicoController::class, 'insertBaixasMedicas'])->name('insertBaixasMedicas');
 });
 
 

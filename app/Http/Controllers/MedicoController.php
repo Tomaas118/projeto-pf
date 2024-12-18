@@ -223,6 +223,6 @@ class MedicoController extends Controller
     public function showUnidadesMedicasForm()
     {
         $unidadesMedicas = UnidadesMedicas::all();
-        return view('Medico.Dashboard.InsertBaixasMedicas', compact('unidadesMedicas'));
+        return view('Medico.Dashboard.insertBaixasMedicas', compact('unidadesMedicas'));
     }
 }
