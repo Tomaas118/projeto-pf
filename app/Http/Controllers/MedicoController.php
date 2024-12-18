@@ -45,7 +45,7 @@ class MedicoController extends Controller
             $isMedico = DB::table('medicos')->where('id_user', $user->id)->exists();
 
             if ($isMedico) {
-                return redirect()->intended('medico.dashboard');
+                return redirect()->intended('Medico/Dashboard');
             } else {
                 $isPaciente = DB::table('pacientes')->where('id_user', $user->id)->exists();
 
@@ -153,7 +153,8 @@ class MedicoController extends Controller
         return redirect()->route('loginMedico')->with('success', 'Médico registado com sucesso!');
     }
 
-    public function registarTotal(){
+    public function registarTotal()
+    {
         $userData = session()->only(['medico_user_name', 'medico_user_email', 'medico_user_password']);
         $medicoData = session()->only(['medico_nome', 'medico_morada', 'medico_telemovel', 'medico_n_cidadao', 'medico_especialidade']);
         $unidadesMedicas = session('unidades_medicas');
@@ -222,6 +223,6 @@ class MedicoController extends Controller
     public function showUnidadesMedicasForm()
     {
         $unidadesMedicas = UnidadesMedicas::all();
-        return view('Medico.Dashboard.InsertBaixasMedicas', compact('unidadesMedicas'));
+        return view('Medico.Dashboard.insertBaixasMedicas', compact('unidadesMedicas'));
     }
 }
