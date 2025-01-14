@@ -206,8 +206,11 @@ class MedicoController extends Controller
             'recomendacoes' => 'nullable'
         ]);
 
+        $medico = Medico::where('id_user', Auth::id())->first();
+        $medicoId = $medico['id'];
+
         BaixaMedica::create([
-            'id_medico' => Auth::id(),
+            'id_medico' => $medicoId,
             'id_paciente' => $request->id_paciente,
             'id_unidadeMedica' => $request->id_unidadeMedica,
             'id_ncidadao' => $request->cartao_cidadao_input,
@@ -217,12 +220,57 @@ class MedicoController extends Controller
             'recomendacoes' => $request->recomendacoes
         ]);
 
-        return redirect()->route('insertBaixasMedicas')->with('success', 'Baixa médica criada com sucesso!');
+        return redirect()->route('inserirBaixas')->with('success', 'Baixa médica criada com sucesso!');
     }
 
     public function showUnidadesMedicasForm()
     {
-        $unidadesMedicas = UnidadesMedicas::all();
-        return view('Medico.Dashboard.insertBaixasMedicas', compact('unidadesMedicas'));
+        $medico = Medico::where('id_user', Auth::id())->first();
+        $unidadesMedicas = $medico->unidadesMedicas;
+
+        return view('Medico.InsertBaixasMedicas', compact('unidadesMedicas'));
+    }
+
+    public function verBaixasTemporarias()
+    {
+        $userId = Auth::id();
+        $medicoId = Medico::where('id_user', $userId)->first();
+        $medicoId = $medicoId["id"];
+
+        $baixas = BaixaMedica::where('id_medico', $medicoId)->get();
+    
+        return view('Medico.verBaixas', compact('baixas'));    
+    }
+
+    public function verEditarBaixa($id)
+    {
+        $baixa = BaixaMedica::findOrFail($id);
+        $medico = Medico::where('id_user', Auth::id())->first();
+        $unidadesMedicas = $medico->unidadesMedicas;
+
+        return view('Medico.editarBaixasMedicas', compact('baixa', 'unidadesMedicas'));
+    }
+
+    public function editarBaixa(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'diagnostico' => 'required|string',
+            'dataInicio' => 'required|date',
+            'dataFim' => 'required|date',
+            'id_unidadeMedica' => 'required|exists:unidades_medicas,id',
+        ]);
+
+        $baixa = BaixaMedica::findOrFail($id);
+        $baixa->update($validated);
+
+        return redirect()->route('baixas')->with('success', 'Baixa Médica atualizada com sucesso!');
+    }
+
+    public function eliminarBaixa($id)
+    {
+        $baixa = BaixaMedica::findOrFail($id);
+        $baixa->delete();
+        return redirect()->route('baixas')->with('success', 'Baixa médica eliminada');
+        
     }
 }

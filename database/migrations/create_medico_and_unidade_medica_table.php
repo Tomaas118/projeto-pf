@@ -33,9 +33,9 @@ return new class extends Migration {
     }
 
     public function down(): void {
-        Schema::dropIfExists('medicos');
-        Schema::dropIfExists('unidades_medicas');
         Schema::dropIfExists('medicos_unidades_medicas');
+        Schema::dropIfExists('unidades_medicas');
+        Schema::dropIfExists('medicos');
         // Schema::dropIfExists('medico');
         // Schema::dropIfExists('unidade_medica');
         // Schema::dropIfExists('medico_unidade_medica');

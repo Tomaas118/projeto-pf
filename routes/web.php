@@ -16,13 +16,17 @@ Route::get('/Registar-Paciente-User', function () { return view('LoginRegistar.r
 Route::get('/Registar-Paciente', function () { return view('LoginRegistar.registarPaciente'); });
 
 Route::prefix('Medico')->group(function () {
-    Route::get('/Dashboard', function () { return view('Medico.Dashboard.dashboardMedico'); })->name('MedicoDashboard');
+    Route::get('/Dashboard', function () { return view('Medico.dashboardMedico'); })->name('MedicoDashboard');
     
-    Route::get('/Baixas-temporarias', [MedicoController::class, 'showUnidadesMedicasForm']);
+    Route::get('/Inserir-Baixas-temporarias', [MedicoController::class, 'showUnidadesMedicasForm'])->name('inserirBaixas');
+    Route::get('/Baixas-temporarias', [MedicoController::class, 'verBaixasTemporarias'])->name('baixas');
     Route::get('/api/paciente/{cartao_cidadao}', [MedicoController::class, 'getPaciente']);
+    Route::get('/Editar-Baixa/{id}', [MedicoController::class, 'verEditarBaixa'])->name('verEditarBaixa');
     
     Route::post('/dashboard', [MedicoController::class, 'dashboardMedico'])->name('dashboardMedico');
     Route::post('/Baixas-temporarias', [MedicoController::class, 'insertBaixasMedicas'])->name('insertBaixasMedicas');
+    Route::post('/Editar-Baixa/{id}', [MedicoController::class, 'editarBaixa'])->name('EditarBaixa');
+    Route::post('/Eliminar-Baixa/{id}', [MedicoController::class, 'eliminarBaixa'])->name('eliminarBaixa');
 });
 
 
