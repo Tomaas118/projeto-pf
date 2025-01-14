@@ -273,4 +273,13 @@ class MedicoController extends Controller
         return redirect()->route('baixas')->with('success', 'Baixa médica eliminada');
         
     }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/');
+    }
 }

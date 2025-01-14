@@ -61,7 +61,6 @@
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
         <form id="deleteForm" method="POST" style="display:inline;">
             @csrf
-            @method('DELETE')
             <button type="submit" class="btn btn-danger">Sim</button>
         </form>
       </div>
@@ -81,7 +80,7 @@
         $('#pacienteNome').text(pacienteNome);
 
         var form = $('#deleteForm');
-        form.attr('action', '/baixas/' + baixaId);
+        form.attr('action', 'Eliminar-Baixa/' + baixaId);
     });
 </script>
 @endsection
