@@ -206,8 +206,11 @@ class MedicoController extends Controller
             'recomendacoes' => 'nullable'
         ]);
 
+        $medico = Medico::where('id_user', Auth::id())->first();
+        $medicoId = $medico['id'];
+
         BaixaMedica::create([
-            'id_medico' => Auth::id(),
+            'id_medico' => $medicoId,
             'id_paciente' => $request->id_paciente,
             'id_unidadeMedica' => $request->id_unidadeMedica,
             'id_ncidadao' => $request->cartao_cidadao_input,
