@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BaixaMedica;
 use App\Models\Paciente;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -41,7 +42,7 @@ class PacienteController extends Controller
             $isPaciente = DB::table('pacientes')->where('id_user', $user->id)->exists();
             
             if ($isPaciente) {
-                return redirect()->intended('paciente.dashboard'); 
+                return redirect()->intended('Paciente/Dashboard'); 
             } else {
                 $isMedico = DB::table('medicos')->where('id_user', $user->id)->exists();
                 
@@ -135,5 +136,15 @@ class PacienteController extends Controller
         session()->forget('user_data');
 
         return redirect()->route('loginPaciente')->with('success', 'Utilizador registado com sucesso!');
+    }
+
+    public function verBaixasTemporarias() {
+        $userId = Auth::id();
+        $pacienteId = Paciente::where('id_user', $userId)->first();
+        $pacienteId = $pacienteId["id"];
+
+        $baixas = BaixaMedica::where('id_paciente', $pacienteId)->get();
+        return view('Paciente.dashboardPaciente', compact('baixas'));    
+
     }
 }
