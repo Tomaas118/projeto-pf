@@ -33,21 +33,23 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
-            <a class="navbar-brand" href="{{ route('MedicoDashboard') }}">Dashboard</a>
+        <a class="navbar-brand" href="{{ auth()->user()->is_medic ? route('MedicoDashboard') : route('PacienteDashboard') }}">Dashboard</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
+                @if(auth()->user()->is_medic)
                     <li class="nav-item">
-                        <a class="nav-link" href="Baixas-temporarias">Baixas Médicas</a>
+                        <a class="nav-link" href="Baixas-temporarias">Ver Baixas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Profile</a>
+                        <a class="nav-link" href="#">Gerir Centro Hospitalar</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Settings</a>
+                        <a class="nav-link" href="#">Instruções Utilização</a>
                     </li>
+                @endif
                     @yield('navbar-content')
                 </ul>
 

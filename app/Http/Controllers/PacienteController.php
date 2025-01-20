@@ -90,7 +90,16 @@ class PacienteController extends Controller
         $pacienteData = $request->validate([
             'nome' => 'required|max:255',
             'morada' => 'required|max:255',
-            'n_cidadao' => 'required|min:8|max:8|unique:pacientes,n_cidadao',
+            'n_cidadao' => [
+                'required',
+                'min:8',
+                'max:8',
+                function ($attribute, $value, $fail) {
+                    if (DB::table('pacientes')->where('n_cidadao', $value)->exists() || DB::table('medicos')->where('n_cidadao', $value)->exists()) {
+                        $fail('Esse numero de cidadão já existe.');
+                    }
+                },
+            ],
             'data_nascimento' => 'required|before:today|after:1900-01-01',
             'n_nacionalSaude' => 'required|min:9|max:9|unique:pacientes,n_nacionalSaude',
         ], [
@@ -98,7 +107,7 @@ class PacienteController extends Controller
             'nome.max' => 'O campo nome só suporta 255 caracters.',
             'morada.required' => 'O campo morada é obrigatória.',
             'morada.max' => 'O campo morada só suporta 255 caracters.',
-            'n_cidadao.required' => 'O numero de cidadão é obrigatórioé obrigatório',
+            'n_cidadao.required' => 'O numero de cidadão é obrigatório.',
             'n_cidadao.min' => 'O numero de cidadão tem que ter exatamente 8 numeros.',
             'n_cidadao.max' => 'O numero de cidadão tem que ter exatamente 8 numeros.',
             'n_cidadao.unique' => 'Esse numero de cidadão já existe',

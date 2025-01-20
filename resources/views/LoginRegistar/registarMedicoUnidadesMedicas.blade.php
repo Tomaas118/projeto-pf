@@ -37,7 +37,8 @@
       </div>
       <div class="col-6">
         <div class="form-check">
-          <input type="checkbox" class="form-check-input" id="unidade_ativo_1" name="unidade_ativo[]" checked>
+          <input type="hidden" name="unidade_ativo[1]" value="0">
+          <input type="checkbox" class="form-check-input" id="unidade_ativo_1" name="unidade_ativo[1]" value="1" checked>
           <label class="form-check-label" for="unidade_ativo_1">Ainda trabalha lá</label>
         </div>
       </div>
@@ -153,11 +154,17 @@
     const checkboxDiv = document.createElement('div');
     checkboxDiv.classList.add('form-check');
     
+    const hiddenInput = document.createElement('input');
+    hiddenInput.type = 'hidden';
+    hiddenInput.name = `unidade_ativo[${index}]`;
+    hiddenInput.value = '0';
+
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
     checkbox.classList.add('form-check-input');
     checkbox.id = `unidade_ativo_${index}`;
-    checkbox.name = 'unidade_ativo[]';
+    checkbox.name = `unidade_ativo[${index}]`;
+    checkbox.value = '1';
     checkbox.checked = true;
 
     const label = document.createElement('label');
@@ -165,6 +172,7 @@
     label.setAttribute('for', `unidade_ativo_${index}`);
     label.textContent = 'Ainda trabalha lá';
 
+    checkboxDiv.appendChild(hiddenInput);
     checkboxDiv.appendChild(checkbox);
     checkboxDiv.appendChild(label);
     return checkboxDiv;
