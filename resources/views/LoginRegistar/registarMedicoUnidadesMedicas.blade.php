@@ -69,7 +69,6 @@
   function areAllFieldsEmpty(groupIndex) {
     const nomeField = document.getElementById(`unidade_nome_${groupIndex}`);
     const moradaField = document.getElementById(`unidade_morada_${groupIndex}`);
-
     return !nomeField.value && !moradaField.value;
   }
 
@@ -81,7 +80,6 @@
     currentGroup.remove();
     currentSetorCheckboxGroup.remove();
   }
-
 
   function getCurrentIndex(input) {
     const idParts = input.id.split('_');
@@ -150,33 +148,22 @@
   } 
 
   function createCheckboxField(index) {
-    const checkboxDiv = document.createElement('div');
-    checkboxDiv.classList.add('form-check');
-    
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
     checkbox.classList.add('form-check-input');
-    checkbox.id = `unidade_ativo_${index}`;
     checkbox.name = 'unidade_ativo[]';
+    checkbox.id = `unidade_ativo_${index}`;
     checkbox.checked = true;
-
-    const label = document.createElement('label');
-    label.classList.add('form-check-label');
-    label.setAttribute('for', `unidade_ativo_${index}`);
-    label.textContent = 'Ainda trabalha lá';
-
-    checkboxDiv.appendChild(checkbox);
-    checkboxDiv.appendChild(label);
-    return checkboxDiv;
+    return checkbox;
   }
 
-  function createRow(inputs) {
+  function createRow(elements) {
     const row = document.createElement('div');
     row.classList.add('row', 'mb-3');
-    inputs.forEach(input => {
+    elements.forEach(element => {
       const col = document.createElement('div');
       col.classList.add('col-6');
-      col.appendChild(input);
+      col.appendChild(element);
       row.appendChild(col);
     });
     return row;
