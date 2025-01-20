@@ -50,7 +50,7 @@ class MedicoController extends Controller
                 $isPaciente = DB::table('pacientes')->where('id_user', $user->id)->exists();
 
                 if ($isPaciente) {
-                    return redirect()->intended('paciente.dashboard'); 
+                    return redirect()->intended('Paciente/Dashboard');
                 }
             }
 
@@ -98,13 +98,26 @@ class MedicoController extends Controller
             'nome' => 'required|max:255',
             'morada' => 'required|max:255',
             'telemovel' => 'required|min:9|max:9',
-            'n_cidadao' => 'required|min:8|max:8',
+            'n_cidadao' => [
+                'required',
+                'min:8',
+                'max:8',
+                function ($attribute, $value, $fail) {
+                    if (DB::table('medicos')->where('n_cidadao', $value)->exists() || DB::table('pacientes')->where('n_cidadao', $value)->exists()) {
+                        $fail('Esse numero de cidadão já existe.');
+                    }
+                },
+            ],
             'especialidade' => 'required|max:255',
         ], [
             'nome.required' => 'O campo de nome é obrigatório.',
             'nome.max' => 'O campo só suporta 255 caracters.',
             'morada.required' => 'O campo morada é obrigatória.',
             'morada.max' => 'O campo só suporta 255 caracters.',
+            'n_cidadao.required' => 'O numero de cidadão é obrigatório.',
+            'n_cidadao.min' => 'O numero de cidadão tem que ter exatamente 8 numeros.',
+            'n_cidadao.max' => 'O numero de cidadão tem que ter exatamente 8 numeros.',
+            'n_cidadao.unique' => 'Esse numero de cidadão já existe',
             'telemovel.required' => 'A password é obrigatória.',
             'telemovel.min' => 'O campo deve ter exatamente 9 numeros.',
             'telemovel.max' => 'O campo deve ter exatamente 9 numeros.',
@@ -126,7 +139,7 @@ class MedicoController extends Controller
     public function registar(Request $request)
     {
         $unidades = $request->only(['unidade_nome', 'unidade_morada', 'unidade_setor', 'unidade_ativo']);
-
+        
         $unidades = array_map(function($nome, $morada, $setor, $ativo) {
             return [
                 'nome' => $nome,
@@ -134,7 +147,7 @@ class MedicoController extends Controller
                 'setor' => $setor,
                 'ativo' => $ativo ? 1 : 0,
             ];
-        }, $unidades['unidade_nome'], $unidades['unidade_morada'], $unidades['unidade_setor'], $unidades['unidade_ativo']?? []);
+        }, $unidades['unidade_nome'], $unidades['unidade_morada'], $unidades['unidade_setor'], $unidades['unidade_ativo'] ?? []);
         
         $unidades = array_filter($unidades, function($grupo) {
             return isset($grupo['nome'], $grupo['morada'], $grupo['setor'])
@@ -142,13 +155,12 @@ class MedicoController extends Controller
                 && $grupo['morada'] !== null && $grupo['morada'] !== ''
                 && $grupo['setor'] !== null && $grupo['setor'] !== '';
         });
-        
+
         session([
             'unidades_medicas' => $unidades,
         ]);
 
         $this->registarTotal();
-
 
         return redirect()->route('loginMedico')->with('success', 'Médico registado com sucesso!');
     }
