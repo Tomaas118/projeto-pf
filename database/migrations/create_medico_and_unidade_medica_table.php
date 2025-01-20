@@ -13,7 +13,7 @@ return new class extends Migration {
             $table->string('nome', 255);
             $table->string('morada',255);
             $table->string('telemovel', 255);
-            $table->string('n_cidadao', 255);
+            $table->string('n_cidadao', 255)->unique();
             $table->string('especialidade', 255);
         });
 
