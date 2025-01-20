@@ -139,7 +139,7 @@ class MedicoController extends Controller
     public function registar(Request $request)
     {
         $unidades = $request->only(['unidade_nome', 'unidade_morada', 'unidade_setor', 'unidade_ativo']);
-        
+
         $unidades = array_map(function($nome, $morada, $setor, $ativo) {
             return [
                 'nome' => $nome,
@@ -147,8 +147,8 @@ class MedicoController extends Controller
                 'setor' => $setor,
                 'ativo' => $ativo ? 1 : 0,
             ];
-        }, $unidades['unidade_nome'], $unidades['unidade_morada'], $unidades['unidade_setor'], $unidades['unidade_ativo'] ?? []);
-        
+        }, $unidades['unidade_nome'], $unidades['unidade_morada'], $unidades['unidade_setor'], $unidades['unidade_ativo']);
+
         $unidades = array_filter($unidades, function($grupo) {
             return isset($grupo['nome'], $grupo['morada'], $grupo['setor'])
                 && $grupo['nome'] !== null && $grupo['nome'] !== ''
@@ -193,7 +193,7 @@ class MedicoController extends Controller
                 'setor' => $unidadeMedica['setor'],
             ]);
 
-            $medico->unidadesMedicas()->attach($unidade->id, ['ativo' => isset($unidadeMedica['ativo']) ? 1 : 0]);
+            $medico->unidadesMedicas()->attach($unidade->id, ['ativo' => $unidadeMedica['ativo']]);
         }
 
         session()->flush();
