@@ -48,7 +48,7 @@
             </div>
 
             <div class="col-md-3 mb-4">
-                <a href="#" class="text-decoration-none">
+                <a href="{{ route('gerarPDF') }}" class="text-decoration-none">
                     <div class="card bg-primary text-white text-center h-100 shadow-sm">
                         <div class="card-body d-flex flex-column justify-content-center align-items-center">
                             <div class="icon-wrapper">
