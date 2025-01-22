@@ -25,6 +25,7 @@ Route::middleware(CheckAuthenticated::class)->group(function () {
         Route::get('/Baixas-temporarias', [MedicoController::class, 'verBaixasTemporarias'])->name('baixas');
         Route::get('/api/paciente/{cartao_cidadao}', [MedicoController::class, 'getPaciente']);
         Route::get('/Editar-Baixa/{id}', [MedicoController::class, 'verEditarBaixa'])->name('verEditarBaixa');
+        Route::get('/Gerar-PDF', [MedicoController::class, 'gerarPDF'])->name('gerarPDF');
         
         Route::post('/dashboard', [MedicoController::class, 'dashboardMedico'])->name('dashboardMedico');
         Route::post('/Baixas-temporarias', [MedicoController::class, 'insertBaixasMedicas'])->name('insertBaixasMedicas');
