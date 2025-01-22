@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\BaixaMedica;
 use App\Models\Paciente;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
+use App\Helpers\ChartHelper;
 
 class MedicoController extends Controller
 {
@@ -293,5 +296,64 @@ class MedicoController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
+    }
+
+    public function gerarPDF()
+    {
+        $medico = Medico::where('id_user', Auth::id())->first();
+        $baixas = BaixaMedica::where('id_medico', $medico->id)->get();
+
+        $totalDias = 0;
+        $totalBaixas = $baixas->count();
+        $publicBaixas = $baixas->where('unidadeMedica.setor', 'Publico')->count();
+        $privateBaixas = $baixas->where('unidadeMedica.setor', 'Privada')->count();
+        $diagnostics = $baixas->groupBy('diagnostico')->map->count();
+
+        foreach ($baixas as $baixa) {
+            $dataInicio = Carbon::parse($baixa->dataInicio);
+            $dataFim = Carbon::parse($baixa->dataFim);
+            $dias = max(0, $dataInicio->diffInDays($dataFim));
+            $totalDias += $dias;
+        }
+
+        $averageTime = $totalBaixas > 0 ? round($totalDias / $totalBaixas) : 0;
+
+        $uniquePatients = $baixas->pluck('paciente')->unique('id');
+        $ages = $uniquePatients->map(function ($paciente) {
+            return Carbon::parse($paciente->data_nascimento)->age;
+        });
+
+        $ageDistribution = $ages->countBy()->sortKeys();
+
+        $generalChartUrl = ChartHelper::generatePieChartUrl(
+            [$publicBaixas, $privateBaixas, $totalBaixas - $publicBaixas - $privateBaixas],
+            ['Público', 'Privado'],
+            ['#4caf50', '#f44336', '#9e9e9e']
+        );
+
+        $diagnosticChartUrl = ChartHelper::generateBarChartUrl(
+            $diagnostics->values()->all(),
+            $diagnostics->keys()->all(),
+            ['#ff9800', '#2196f3', '#4caf50', '#f44336', '#9e9e9e']
+        );
+
+        $ageChartUrl = ChartHelper::generateBarChartUrl(
+            $ageDistribution->values()->all(),
+            $ageDistribution->keys()->all(),
+            ['#4caf50']
+        );
+
+        $data = [
+            'totalBaixas' => $totalBaixas,
+            'publicBaixas' => $publicBaixas,
+            'privateBaixas' => $privateBaixas,
+            'averageTime' => $averageTime,
+            'ageChartUrl' => $ageChartUrl,
+            'diagnosticChartUrl' => $diagnosticChartUrl,
+            'generalChartUrl' => $generalChartUrl,
+        ];
+
+        $pdf = PDF::loadView('Medico.pdfReport', $data);
+        return $pdf->download('relatorio_baixas_medicas.pdf');
     }
 }
