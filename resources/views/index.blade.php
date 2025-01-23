@@ -14,6 +14,10 @@
 </head>
 <body class="text-center">
 
+    <div class="help-button">
+        <a href="{{ asset('manual.pdf') }}" target="_blank" class="btn btn-info" title="Manual de Instruções">?</a>
+    </div>
+
     <div class="container">
         <img class="img-top img-fluid" src="Imagens/SNS24.png" alt="SNS 24"><br>
         <h3 class="mt-3">Qual é o tipo de conta que vai utilizar?</h3>
