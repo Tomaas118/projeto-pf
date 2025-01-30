@@ -46,9 +46,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">Gerir Centro Hospitalar</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Instruções Utilização</a>
-                    </li>
                 @endif
                     @yield('navbar-content')
                 </ul>
