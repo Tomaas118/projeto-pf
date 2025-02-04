@@ -8,7 +8,7 @@
     <div class="section functionality-section">
         <div class="row">
 
-            <div class="col-md-3 mb-4">
+            <div class="col-md-4 mb-4">
                 <a href="Inserir-Baixas-temporarias" class="text-decoration-none">
                     <div class="card bg-primary text-white text-center h-150 shadow-sm">
                         <div class="card-body d-flex flex-column justify-content-center align-items-center">
@@ -21,7 +21,7 @@
                 </a>
             </div>
 
-            <div class="col-md-3 mb-4">
+            <div class="col-md-4 mb-4">
                 <a href="Baixas-temporarias" class="text-decoration-none">
                     <div class="card bg-primary text-white text-center h-100 shadow-sm">
                         <div class="card-body d-flex flex-column justify-content-center align-items-center">
@@ -33,7 +33,7 @@
                     </div>
                 </a>
             </div>
-
+<!-- 
             <div class="col-md-3 mb-4">
                 <a href="#" class="text-decoration-none">
                     <div class="card bg-primary text-white text-center h-100 shadow-sm">
@@ -45,9 +45,9 @@
                         </div>
                     </div>
                 </a>
-            </div>
+            </div> -->
 
-            <div class="col-md-3 mb-4">
+            <div class="col-md-4 mb-4">
                 <a href="{{ route('gerarPDF') }}" class="text-decoration-none">
                     <div class="card bg-primary text-white text-center h-100 shadow-sm">
                         <div class="card-body d-flex flex-column justify-content-center align-items-center">
