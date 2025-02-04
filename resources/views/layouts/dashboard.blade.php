@@ -43,9 +43,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="Baixas-temporarias">Ver Baixas</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Gerir Centro Hospitalar</a>
-                    </li>
                 @endif
                     @yield('navbar-content')
                 </ul>
