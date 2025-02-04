@@ -40,6 +40,7 @@
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Unidade Médica</label>
                         <select class="form-control" id="unidade_medica_select" name="id_unidadeMedica">
+                            <option value="" disabled selected>Selecione a Unidade Médica</option>
                             @foreach($unidadesMedicas as $unidade)
                                 <option value="{{ $unidade->id }}">{{ $unidade->nome }}</option>
                             @endforeach
