@@ -219,6 +219,17 @@ class MedicoController extends Controller
             'dataInicio' => 'required|date|after_or_equal:today',
             'dataFim' => 'required|date|after_or_equal:dataInicio',
             'recomendacoes' => 'nullable'
+        ], [
+            'id_unidadeMedica.required' => 'O campo Unidade Médica é obrigatório.',
+            'id_paciente.required' => 'O campo Paciente é obrigatório.',
+            'cartao_cidadao_input.required' => 'O campo Cartão de Cidadão é obrigatório.',
+            'diagnostico.required' => 'O campo Diagnóstico é obrigatório.',
+            'dataInicio.required' => 'O campo Data de Início é obrigatório.',
+            'dataInicio.date' => 'O campo Data de Início deve ser uma data válida.',
+            'dataInicio.after_or_equal' => 'O campo Data de Início deve ser uma data igual ou posterior a hoje.',
+            'dataFim.required' => 'O campo Data de Fim é obrigatório.',
+            'dataFim.date' => 'O campo Data de Fim deve ser uma data válida.',
+            'dataFim.after_or_equal' => 'O campo Data de Fim deve ser uma data igual ou posterior à Data de Início.',
         ]);
 
         $medico = Medico::where('id_user', Auth::id())->first();
@@ -241,9 +252,21 @@ class MedicoController extends Controller
     public function showUnidadesMedicasForm()
     {
         $medico = Medico::where('id_user', Auth::id())->first();
-        $unidadesMedicas = $medico->unidadesMedicas;
+        $unidadesMedicas = $medico->unidadesMedicas()
+            ->wherePivot('ativo', 1)
+            ->get();
 
         return view('Medico.InsertBaixasMedicas', compact('unidadesMedicas'));
+    }
+
+    public function showInsertBaixasMedicasForm()
+    {
+        $medico = Medico::where('id_user', Auth::id())->first();
+        $unidadesMedicas = $medico->unidadesMedicas()
+            ->wherePivot('ativo', 1)
+            ->get();
+
+        return view('Medico.insertBaixasMedicas', compact('unidadesMedicas'));
     }
 
     public function verBaixasTemporarias()
