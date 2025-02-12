@@ -256,7 +256,7 @@ class MedicoController extends Controller
             ->wherePivot('ativo', 1)
             ->get();
 
-        return view('Medico.InsertBaixasMedicas', compact('unidadesMedicas'));
+        return view('Medico.insertBaixasMedicas', compact('unidadesMedicas'));
     }
 
     public function showInsertBaixasMedicasForm()
